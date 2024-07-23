@@ -25,11 +25,11 @@ namespace WpfApp1
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void StartConnection(object sender, RoutedEventArgs e)
         {
-          
-            MessageBox.Show("1 pressed");
+
             
+
         }
     }
 }

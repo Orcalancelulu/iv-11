@@ -25,7 +25,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="No Device found" 
+            <TextBlock Text="Not connected" 
                        FontSize="40" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center"
@@ -34,7 +34,7 @@
                     Background="Transparent"
                     Width="190"
                     Height="84"
-                    >
+                    Click="StartConnection">
                 <Border Background="#FFBA08"
                         CornerRadius="20">
                     <TextBlock Text="Connect"
@@ -45,10 +45,11 @@
                
             </Button>
 
+            <ContentControl>
+                
+            </ContentControl>
+
         </Grid>
     </Border>
 
-
-
- 
 </Window>

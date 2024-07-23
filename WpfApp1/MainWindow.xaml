@@ -33,7 +33,7 @@
             <Button Grid.Row="1"
                     Background="Transparent"
                     Width="190"
-                    Height="85"
+                    Height="84"
                     >
                 <Border Background="#FFBA08"
                         CornerRadius="20">

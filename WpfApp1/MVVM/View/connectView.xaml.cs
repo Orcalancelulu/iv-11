@@ -13,25 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace WpfApp1.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaktionslogik für connectView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class connectView : UserControl
     {
-        public MainWindow()
+        public connectView()
         {
             InitializeComponent();
-        }
-
-
-
-        private void loadHome(object sender, RoutedEventArgs e)
-        {
-
-            Button1.Visibility = Visibility.Collapsed;
-
         }
     }
 }

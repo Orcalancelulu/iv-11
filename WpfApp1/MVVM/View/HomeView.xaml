@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="WpfApp1.MVVM.View.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.MVVM.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" 
+             d:DesignWidth="920">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="70"/>
+
+        </Grid.RowDefinitions>
+
+        <Border Grid.RowSpan="4" 
+                Background="#2b2b2b"
+                Margin="0 0 0 0"/>
+
+        <TextBlock Text="Connected with XXXXXXXXX"
+                   Grid.Column="1"
+                   FontSize="40"
+                   Foreground="White"
+                   TextAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+
+        <Image Source="/Images/iv-11.png" 
+               Grid.Column="1" 
+               Grid.Row="1"
+               Grid.RowSpan="3"
+               MaxWidth="580"/>
+
+
+        <TextBlock Text="CPU Temperature: xx°C" Grid.Column="1" Grid.Row="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <StackPanel Grid.Row="1">
+            <RadioButton Height="100" FontSize="30" Foreground="White" Content="CPU Temp" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
+            <RadioButton Height="100" FontSize="30" Foreground="White" Content="CPU Pow" Style="{StaticResource MenuButtonTheme}" Command="{Binding ConnectViewCommand}"/>
+            <RadioButton Height="100" FontSize="30" Foreground="White" Content="Time" Style="{StaticResource MenuButtonTheme}"/>
+        </StackPanel>
+        <Grid Name="tube1" Grid.Row="1" Grid.Column="1">
+            <Rectangle Name="t11" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,95,556,185"/>
+            <Rectangle Name="t12" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="194,108,556,122"/>
+            <Rectangle Name="t13" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="194,184,556,46"/>
+            <Rectangle Name="t14" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,247,556,33"/>
+            <Rectangle Name="t15" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="135,184,615,46"/>
+            <Rectangle Name="t16"  Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="135,108,615,122"/>
+            <Rectangle Name="t17" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,171,556,109"/>
+            <Ellipse   Name="t18" Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="209,247,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+        </Grid>
+        <Grid Name="tube2" Grid.Row="1" Grid.Column="1">
+            <Rectangle Name="t21" Fill="LightSeaGreen" Margin="275,95,416,185"/>
+            <Rectangle Name="t22" Width="10" Height="60" Fill="LightSeaGreen" Margin="334,108,416,122"/>
+            <Rectangle Name="t23" Width="10" Height="60" Fill="LightSeaGreen" Margin="334,184,416,46"/>
+            <Rectangle Name="t24" Fill="LightSeaGreen" Margin="275,247,416,33"/>
+            <Rectangle Name="t25" Width="10" Height="60" Fill="LightSeaGreen" Margin="275,184,475,46"/>
+            <Rectangle Name="t26" Width="10" Height="60" Fill="LightSeaGreen" Margin="275,108,475,122"/>
+            <Rectangle Name="t27" Fill="LightSeaGreen" Margin="275,171,416,109"/>
+            <Ellipse   Name="t28" HorizontalAlignment="Left" Height="10" Margin="349,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+        </Grid>
+        <Grid Name="tube3" Grid.Row="1" Grid.Column="1">
+            <Rectangle Name="t31" Fill="LightSeaGreen" Margin="412,95,279,185"/>
+            <Rectangle Name="t32" Width="10" Height="60" Fill="LightSeaGreen" Margin="471,108,279,122"/>
+            <Rectangle Name="t33" Width="10" Height="60" Fill="LightSeaGreen" Margin="471,184,279,46"/>
+            <Rectangle Name="t34" Fill="LightSeaGreen" Margin="412,247,279,33"/>
+            <Rectangle Name="t35" Width="10" Height="60" Fill="LightSeaGreen" Margin="412,184,338,46"/>
+            <Rectangle Name="t36" Width="10" Height="60" Fill="LightSeaGreen" Margin="412,108,338,122"/>
+            <Rectangle Name="t37" Fill="LightSeaGreen" Margin="412,171,279,109"/>
+            <Ellipse   Name="t38" HorizontalAlignment="Left" Height="10" Margin="486,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+        </Grid>
+        <Grid Name="tube4" Grid.Row="1" Grid.Column="1">
+            <Rectangle Name="t41" Fill="LightSeaGreen" Margin="543,95,148,185"/>
+            <Rectangle Name="t42" Width="10" Height="60" Fill="LightSeaGreen" Margin="602,108,148,122"/>
+            <Rectangle Name="t43" Width="10" Height="60" Fill="LightSeaGreen" Margin="602,184,148,46"/>
+            <Rectangle Name="t44" Fill="LightSeaGreen" Margin="543,247,148,33"/>
+            <Rectangle Name="t45" Width="10" Height="60" Fill="LightSeaGreen" Margin="543,184,207,46"/>
+            <Rectangle Name="t46" Width="10" Height="60" Fill="LightSeaGreen" Margin="543,108,207,122"/>
+            <Rectangle Name="t47" Fill="LightSeaGreen" Margin="543,171,148,109"/>
+            <Ellipse   Name="t48" HorizontalAlignment="Left" Height="10" Margin="617,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+        </Grid>
+       
+    </Grid>
+
+
+</UserControl>

@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" 
              d:DesignWidth="920">
+
+
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="160"/>
@@ -41,9 +45,9 @@
 
         <TextBlock Text="CPU Temperature: xx°C" Grid.Column="1" Grid.Row="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
         <StackPanel Grid.Row="1">
-            <RadioButton Height="100" FontSize="30" Foreground="White" Content="CPU Temp" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
-            <RadioButton Height="100" FontSize="30" Foreground="White" Content="CPU Pow" Style="{StaticResource MenuButtonTheme}" Command="{Binding ConnectViewCommand}"/>
-            <RadioButton Height="100" FontSize="30" Foreground="White" Content="Time" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Click="Button_Click_1" Height="100" FontSize="30" Foreground="White" Content="CPU Temp" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
+            <RadioButton Click="Button_Click_4" Height="100" FontSize="30" Foreground="White" Content="CPU Pow" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Click="Button_Click_5" Height="100" FontSize="30" Foreground="White" Content="Time" Style="{StaticResource MenuButtonTheme}"/>
         </StackPanel>
         <Grid Name="tube1" Grid.Row="1" Grid.Column="1">
             <Rectangle Name="t11" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,95,556,185"/>
@@ -53,7 +57,7 @@
             <Rectangle Name="t15" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="135,184,615,46"/>
             <Rectangle Name="t16"  Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="135,108,615,122"/>
             <Rectangle Name="t17" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,171,556,109"/>
-            <Ellipse   Name="t18" Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="209,247,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle   Name="t18" Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="209,247,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
         </Grid>
         <Grid Name="tube2" Grid.Row="1" Grid.Column="1">
             <Rectangle Name="t21" Fill="LightSeaGreen" Margin="275,95,416,185"/>
@@ -63,7 +67,7 @@
             <Rectangle Name="t25" Width="10" Height="60" Fill="LightSeaGreen" Margin="275,184,475,46"/>
             <Rectangle Name="t26" Width="10" Height="60" Fill="LightSeaGreen" Margin="275,108,475,122"/>
             <Rectangle Name="t27" Fill="LightSeaGreen" Margin="275,171,416,109"/>
-            <Ellipse   Name="t28" HorizontalAlignment="Left" Height="10" Margin="349,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle   Name="t28" HorizontalAlignment="Left" Height="10" Margin="349,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
         </Grid>
         <Grid Name="tube3" Grid.Row="1" Grid.Column="1">
             <Rectangle Name="t31" Fill="LightSeaGreen" Margin="412,95,279,185"/>
@@ -73,7 +77,7 @@
             <Rectangle Name="t35" Width="10" Height="60" Fill="LightSeaGreen" Margin="412,184,338,46"/>
             <Rectangle Name="t36" Width="10" Height="60" Fill="LightSeaGreen" Margin="412,108,338,122"/>
             <Rectangle Name="t37" Fill="LightSeaGreen" Margin="412,171,279,109"/>
-            <Ellipse   Name="t38" HorizontalAlignment="Left" Height="10" Margin="486,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle   Name="t38" HorizontalAlignment="Left" Height="10" Margin="486,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
         </Grid>
         <Grid Name="tube4" Grid.Row="1" Grid.Column="1">
             <Rectangle Name="t41" Fill="LightSeaGreen" Margin="543,95,148,185"/>
@@ -83,7 +87,7 @@
             <Rectangle Name="t45" Width="10" Height="60" Fill="LightSeaGreen" Margin="543,184,207,46"/>
             <Rectangle Name="t46" Width="10" Height="60" Fill="LightSeaGreen" Margin="543,108,207,122"/>
             <Rectangle Name="t47" Fill="LightSeaGreen" Margin="543,171,148,109"/>
-            <Ellipse   Name="t48" HorizontalAlignment="Left" Height="10" Margin="617,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle   Name="t48" HorizontalAlignment="Left" Height="10" Margin="617,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
         </Grid>
        
     </Grid>

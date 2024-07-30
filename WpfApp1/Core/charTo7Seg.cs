@@ -40,6 +40,8 @@ namespace WpfApp1.Core
             cToInt.Add('G', [1, 0, 1, 1, 1, 1, 0, 0]);
             cToInt.Add('H', [0, 1, 1, 0, 1, 1, 1, 0]);
 
+            cToInt.Add('-', [0, 0, 0, 0, 0, 0, 1, 0]);
+
 
         }
 

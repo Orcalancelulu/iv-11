@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 using WpfApp1.MVVM.View;
 using System.Windows.Shapes;
 using System.Windows.Media;
-using System.Windows.Controls;
+
+using System.Windows.Threading;
 
 namespace WpfApp1.Core
 {
@@ -14,9 +12,16 @@ namespace WpfApp1.Core
     class Bulb
     {
         public int bulbNumber { get; set; }
-        public char content {
-            get;
-            set; 
+
+        private char content;
+
+        public char Content {
+            get => content;
+            set
+            {
+                content = value;
+                displayNumber();
+            } 
         }
 
         public bool withPoint { get; set; }
@@ -48,7 +53,6 @@ namespace WpfApp1.Core
         {
             //displays number
 
-            //missing: content to segmentArray
             charTo7Seg table = new charTo7Seg();
             int[] segmentArray = table.getTable(content, withPoint);
 
@@ -56,18 +60,20 @@ namespace WpfApp1.Core
             int i = 0;
             foreach (string segment in segments)
             {
-                var myRect = fwElement.FindName(segment) as Rectangle;
-                if (myRect != null)
+
+                if (segmentArray[i] == 0)
                 {
-                    if (segmentArray[i] == 0)
-                    {
-                        myRect.Fill = Brushes.DarkGray;
-                    } else
-                    {
-                        myRect.Fill = Brushes.LawnGreen;
-                    }
-                    i++;
+                        
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => ((Rectangle)fwElement.FindName(segment)).Fill = Brushes.DarkGray));
+                } else
+                {
+                        
+                    Application.Current.Dispatcher.BeginInvoke(new Action(() => ((Rectangle)fwElement.FindName(segment)).Fill = Brushes.LawnGreen));
+
+
                 }
+                i++;
+                
             }
 
 

@@ -43,11 +43,13 @@
                MaxWidth="580"/>
 
 
-        <TextBlock Text="CPU Temperature: xx°C" Grid.Column="1" Grid.Row="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
-        <StackPanel Grid.Row="1">
-            <RadioButton Click="Button_Click_1" Height="100" FontSize="30" Foreground="White" Content="CPU Temp" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
-            <RadioButton Click="Button_Click_4" Height="100" FontSize="30" Foreground="White" Content="CPU Pow" Style="{StaticResource MenuButtonTheme}"/>
-            <RadioButton Click="Button_Click_5" Height="100" FontSize="30" Foreground="White" Content="Time" Style="{StaticResource MenuButtonTheme}"/>
+        <TextBlock Name="displayInfo" Text="CPU Temperature: xx°C" Grid.Column="1" Grid.Row="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <StackPanel Grid.Row="1" Grid.RowSpan="3">
+            <RadioButton Click="Button_Click_1" Height="70" FontSize="30" Foreground="White" Content="CPU Temp" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
+            <RadioButton Click="Button_Click_2" Height="70" FontSize="30" Foreground="White" Content="CPU Pow" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Click="Button_Click_3" Height="70" FontSize="30" Foreground="White" Content="CPU Clock" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Click="Button_Click_4" Height="70" FontSize="30" Foreground="White" Content="CPU Usage" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Click="Button_Click_5" Height="70" FontSize="30" Foreground="White" Content="Time" Style="{StaticResource MenuButtonTheme}"/>
         </StackPanel>
         <Grid Name="tube1" Grid.Row="1" Grid.Column="1">
             <Rectangle Name="t11" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,95,556,185"/>

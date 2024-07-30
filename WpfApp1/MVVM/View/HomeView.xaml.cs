@@ -1,11 +1,11 @@
 ﻿using LibreHardwareMonitor.Hardware;
-using System.IO.Packaging;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Globalization;
 using WpfApp1.Core;
+using System.Timers;
+using System.Threading;
+using System.Windows.Media;
+using System.Windows;
+
 
 namespace WpfApp1.MVVM.View
 {
@@ -22,8 +22,17 @@ namespace WpfApp1.MVVM.View
         private int dataDisplayLength;
         private bool isClock = false;
 
+        private System.Timers.Timer timer;
+
+        private bool isSecondPointActive = false;
+
         private Bulb[] bulbs;
         hardwareMonitor hw;
+        private int displayIndex = 0;
+
+        private bool isHWRunning = false;
+
+        private string[] displayInfoString = new string[5] { "CPU Temperature: {0}°C", "CPU Power: {0}W", "CPU Clock Speed: {0}GHz", "CPU Load: {0}%", "{0}"};
 
         public HomeView()
         {
@@ -35,95 +44,147 @@ namespace WpfApp1.MVVM.View
             bulbs[2] = new Bulb(3, ' ', this);
             bulbs[3] = new Bulb(4, ' ', this);
 
-            //get data to display
-            
 
             hw = new hardwareMonitor();
-            System.Diagnostics.Debug.WriteLine("Sensor: {0}, value: {1}", "CPU Temperature", hw.Monitor(SensorType.Temperature, sensorName));
 
-            //send data to raspberry
-
-
-
-
-
-            //test
-            displayTemperature();
-            //end test
+            restartTimer(5000);
+            displayTemperature(); //sets standard display to cpu temp
 
 
         }
+
+
+        private void restartTimer(int pause)
+        {
+            if (timer != null) timer.Dispose();
+            timer = new System.Timers.Timer(pause);
+            timer.Elapsed += new ElapsedEventHandler(timerCall);
+            timer.Enabled = true;
+        }
+
+
+        private void timerCall(object source, ElapsedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("running timer " + e.SignalTime);
+            updateDisplayCheck();
+        }
+
+        private async void updateDisplayCheck() //only one hw.Monitor is allowed to run at the same time or else it crashes
+        {
+            if (isClock)
+            {
+                updateDisplay();
+                return;
+            } else
+            {
+                if (!isHWRunning)
+                {
+                    //hw is method is not running, can call updateDisplay
+                    isHWRunning = true;
+                    await Task.Run(updateDisplay);
+                    isHWRunning = false;
+                    System.Diagnostics.Debug.WriteLine("Running display");
+
+                }
+            }
+        }
+
 
         public void updateDisplay()
         {
             if (isClock)
             {
-                /*DateTime localDate = DateTime.Now;
-                String cultureName = "de-DE";
-
-                
-                var culture = new CultureInfo(cultureName);
-                Console.WriteLine(localDate.ToString(culture));
-                */
-                System.Diagnostics.Debug.WriteLine(DateTime.Now.TimeOfDay);
-
-                //DateTime.Now.TimeOfDay.ToString();
-
-                bulbs[0].content = DateTime.Now.TimeOfDay.ToString()[0];
-
-                bulbs[1].content = DateTime.Now.TimeOfDay.ToString()[1];
-                bulbs[1].withPoint = true;
-
-                bulbs[2].content = DateTime.Now.TimeOfDay.ToString()[3];
-
-                bulbs[3].content = DateTime.Now.TimeOfDay.ToString()[4];
-
-                foreach (Bulb bulb in bulbs)
+                string currentTime = DateTime.Now.TimeOfDay.ToString(); //returns: xx:xx
+                bulbs[0].Content = currentTime[0];
+                if (isSecondPointActive)
                 {
-                    bulb.displayNumber();
+                    isSecondPointActive = false;
+                    bulbs[1].withPoint = false;
+                }
+                else
+                {
+                    isSecondPointActive = true;
+                    bulbs[1].withPoint = true;
+                }
+                bulbs[1].Content = currentTime[1];
+                bulbs[2].Content = currentTime[3];
+                bulbs[3].Content = currentTime[4];
+
+
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => displayInfo.Text = String.Format(displayInfoString[displayIndex], DateTime.Now)));
+
+
+            }
+            else
+            {   
+                float number = hw.Monitor(sensorType, sensorName);
+                string value = ((int)Math.Round(number, 0)).ToString();
+
+                string valueToShowAsText = value;
+                if (displayIndex == 2)
+                {
+                    valueToShowAsText = value[0] + "." + value[1] + value[2];
                 }
 
-            } else
-            {
-                float number = hw.Monitor(sensorType, sensorName);
+                Application.Current.Dispatcher.BeginInvoke(new Action(() => displayInfo.Text = String.Format(displayInfoString[displayIndex], valueToShowAsText)));
 
-                string value = ((int)Math.Round(number, 0)).ToString();
                 if (value.Length <= 1 || (value.Length <= 2 && dataDisplayLength == 3)) value = " " + value;
-
+                if (value.Length <= 2 && dataDisplayLength == 3) value = " " + value;
                 System.Diagnostics.Debug.WriteLine(value);
 
-                bulbs[0].content = (char)value[0];
                 if (sensorType == SensorType.Clock) bulbs[0].withPoint = true;
-                bulbs[1].content = (char)value[1];
-                bulbs[2].content = (dataDisplayLength == 2) ? units[0] : (char)value[2];
-                bulbs[3].content = units[units.Length - 1];
-
-                foreach (Bulb bulb in bulbs)
-                {
-                    bulb.displayNumber();
-                }
+                bulbs[0].Content = (char)value[0];
+                bulbs[1].Content = (char)value[1];
+                bulbs[2].Content = (dataDisplayLength == 2) ? units[0] : (char)value[2];
+                bulbs[3].Content = units[units.Length - 1];
             }
         }
 
 
         public void displayTemperature() //2 digit data, 2 digit units
         {
+            //reset display
+            foreach (Bulb bulb in bulbs)
+            {
+                bulb.withPoint = false;
+                bulb.Content = '-';
+            }
+
+            displayIndex = 0;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => displayInfo.Text = String.Format(displayInfoString[displayIndex], "--")));
+
+
+            //change filters so new sensor data is read
             System.Diagnostics.Debug.WriteLine("temp button");
+
 
             sensorName = "CPU Package";
             sensorType = SensorType.Temperature;
 
+            //set display options
             units = ['°', 'C'];
             dataDisplayLength = 2;
-
             isClock = false;
 
-            updateDisplay();
+            //update display now
+            updateDisplayCheck();
+            timer.Interval = 5000;
 
+            //restartTimer(5000);
         }
         public void displayPower() //3 digits data, 1 digit units
         {
+            foreach (Bulb bulb in bulbs)
+            {
+                bulb.withPoint = false;
+                bulb.Content = '-';
+            }
+
             System.Diagnostics.Debug.WriteLine("power button");
+
+            displayIndex = 1;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => displayInfo.Text = String.Format(displayInfoString[displayIndex], "--")));
+
 
             sensorName = "CPU Package";
             sensorType = SensorType.Power;
@@ -133,12 +194,25 @@ namespace WpfApp1.MVVM.View
 
             isClock = false;
 
+            // if (hw == null) hw = new hardwareMonitor();
 
-            updateDisplay();
+            updateDisplayCheck();
+            timer.Interval = 5000;
+
+            //restartTimer(5000);
         }
         public void displayClock() //2 digit data, 2 digit units
         {
+            foreach (Bulb bulb in bulbs)
+            {
+                bulb.withPoint = false;
+                bulb.Content = '-';
+            }
+
             System.Diagnostics.Debug.WriteLine("clock button");
+
+            displayIndex = 2;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => displayInfo.Text = String.Format(displayInfoString[displayIndex], "--")));
 
             sensorName = "CPU Core #1";
             sensorType = SensorType.Clock;
@@ -148,14 +222,25 @@ namespace WpfApp1.MVVM.View
 
             isClock = false;
 
+            // if (hw == null) hw = new hardwareMonitor();
 
-            updateDisplay();
+            updateDisplayCheck();
+            timer.Interval = 5000;
+
+            //restartTimer(5000);
         }
 
         public void displayLoad() //2 digit data, 2 digit units
         {
+            foreach (Bulb bulb in bulbs)
+            {
+                bulb.withPoint = false;
+                bulb.Content = '-';
+            }
             System.Diagnostics.Debug.WriteLine("load button");
 
+            displayIndex = 3;
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => displayInfo.Text = String.Format(displayInfoString[displayIndex], "--")));
 
             sensorName = "CPU Total";
             sensorType = SensorType.Load;
@@ -165,13 +250,34 @@ namespace WpfApp1.MVVM.View
 
             isClock = false;
 
+            // if (hw == null) hw = new hardwareMonitor();
 
-            updateDisplay();
+            updateDisplayCheck();
+            timer.Interval = 5000;
+
+            //restartTimer(5000);
+        }
+
+        public void displayTime()
+        {
+            foreach (Bulb bulb in bulbs)
+            {
+                bulb.withPoint = false;
+                bulb.Content = '-';
+            }
+
+            displayIndex = 4;
+
+            System.Diagnostics.Debug.WriteLine("wanting time");
+            isClock = true;
+            updateDisplayCheck();
+            timer.Interval = 1000;
         }
 
 
         private void Button_Click_1(object sender, EventArgs e)
         {
+            
             displayTemperature();
         }
 
@@ -192,9 +298,7 @@ namespace WpfApp1.MVVM.View
 
         private void Button_Click_5(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("wanting time");
-           isClock = true;
-            updateDisplay(); 
+            displayTime();
         }
 
 

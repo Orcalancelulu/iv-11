@@ -5,6 +5,12 @@ using System.Timers;
 using System.Threading;
 using System.Windows.Media;
 using System.Windows;
+using System.Reflection.PortableExecutable;
+using Windows.Devices.Bluetooth.GenericAttributeProfile;
+using Windows.Storage.Streams;
+using HidSharp.Experimental;
+using HidSharp.Utility;
+using System.Xml.Linq;
 
 
 namespace WpfApp1.MVVM.View
@@ -34,25 +40,50 @@ namespace WpfApp1.MVVM.View
 
         private string[] displayInfoString = new string[5] { "CPU Temperature: {0}°C", "CPU Power: {0}W", "CPU Clock Speed: {0}GHz", "CPU Load: {0}%", "{0}"};
 
+        private const int numberOfRadioButtons = 5;
+        private int activeRadioButton = 1;
+
         public HomeView()
         {
             InitializeComponent();
 
             bulbs = new Bulb[4];
-            bulbs[0] = new Bulb(1, ' ', this);
-            bulbs[1] = new Bulb(2, ' ', this);
-            bulbs[2] = new Bulb(3, ' ', this);
-            bulbs[3] = new Bulb(4, ' ', this);
-
-
+            for (int i = 0; i < bulbs.Length; i++)
+            {
+                bulbs[i] = new Bulb(i + 1, ' ', this);
+            }
             hw = new hardwareMonitor();
 
             restartTimer(5000);
             displayTemperature(); //sets standard display to cpu temp
 
+            System.Diagnostics.Debug.WriteLine(BtLE.IsConnected.ToString());
+            setUpNotification();
 
         }
 
+        private async void setUpNotification()
+        {
+            GattCommunicationStatus status = await BtLE.SettingsCharacteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
+            BtLE.SettingsCharacteristic.ValueChanged += displayInfoChange;
+        }
+
+        private void displayInfoChange(GattCharacteristic sender, GattValueChangedEventArgs args)
+        {
+            //value of the characteristics is not important, just the noitify event
+            activeRadioButton += 1;
+            if (activeRadioButton > numberOfRadioButtons) { activeRadioButton = 1; }
+
+            System.Diagnostics.Debug.WriteLine("active button = " + activeRadioButton);
+            Application.Current.Dispatcher.BeginInvoke(new Action(() => ((RadioButton)this.FindName("rb" + activeRadioButton)).IsChecked = true));
+
+            if (activeRadioButton == 1) displayTemperature();
+            else if (activeRadioButton == 2) displayPower();
+            else if (activeRadioButton == 3) displayClock();
+            else if (activeRadioButton == 4) displayLoad();
+            else if (activeRadioButton == 5) displayTime();
+
+        }
 
         private void restartTimer(int pause)
         {
@@ -65,7 +96,7 @@ namespace WpfApp1.MVVM.View
 
         private void timerCall(object source, ElapsedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("running timer " + e.SignalTime);
+            //System.Diagnostics.Debug.WriteLine("running timer " + e.SignalTime);
             updateDisplayCheck();
         }
 
@@ -83,7 +114,7 @@ namespace WpfApp1.MVVM.View
                     isHWRunning = true;
                     await Task.Run(updateDisplay);
                     isHWRunning = false;
-                    System.Diagnostics.Debug.WriteLine("Running display");
+                    //System.Diagnostics.Debug.WriteLine("Running display");
 
                 }
             }
@@ -121,8 +152,9 @@ namespace WpfApp1.MVVM.View
                 string value = ((int)Math.Round(number, 0)).ToString();
 
                 string valueToShowAsText = value;
-                if (displayIndex == 2)
+                if (displayIndex == 2 && value.Length > 2)
                 {
+                    System.Diagnostics.Debug.WriteLine(value);
                     valueToShowAsText = value[0] + "." + value[1] + value[2];
                 }
 
@@ -130,25 +162,73 @@ namespace WpfApp1.MVVM.View
 
                 if (value.Length <= 1 || (value.Length <= 2 && dataDisplayLength == 3)) value = " " + value;
                 if (value.Length <= 2 && dataDisplayLength == 3) value = " " + value;
-                System.Diagnostics.Debug.WriteLine(value);
+                //System.Diagnostics.Debug.WriteLine(value);
 
                 if (sensorType == SensorType.Clock) bulbs[0].withPoint = true;
                 bulbs[0].Content = (char)value[0];
                 bulbs[1].Content = (char)value[1];
                 bulbs[2].Content = (dataDisplayLength == 2) ? units[0] : (char)value[2];
                 bulbs[3].Content = units[units.Length - 1];
+
+                
+            }
+            sendDataToIV11();
+        }
+
+        private async void sendDataToIV11()
+        {
+            
+
+            charTo7Seg table = new charTo7Seg();
+            List<int[]> byteInts = new List<int[]>();
+
+            foreach (Bulb bulb in bulbs)
+            {
+                byteInts.Add(table.getTable(bulb.Content, bulb.withPoint));   
+            }
+
+
+            List<int> Pow2 = new List<int> { 128, 64, 32, 16, 8, 4, 2, 1 };
+            byte[] byteArray = new byte[4];
+
+            for (int b = 0; b < 4; b++)
+            {
+                int byteResult = 0;
+                int[] byteInt = byteInts[b];
+
+                for (int i = 0; i < byteInt.Length; i++)
+                {
+                    byteResult += (byteInt[i] == 0) ? 0 : Pow2[i];
+                }
+
+                byteArray[b] = Convert.ToByte(byteResult);
+            }
+
+            var writer = new DataWriter();
+
+            writer.WriteBytes(byteArray);
+
+            GattCommunicationStatus resultWrite = await BtLE.DataCharacteristic.WriteValueAsync(writer.DetachBuffer());
+            if (resultWrite == GattCommunicationStatus.Success)
+            {
+                // Successfully wrote to device
+                Console.WriteLine("wrote to device");
+
             }
         }
 
 
         public void displayTemperature() //2 digit data, 2 digit units
         {
+            activeRadioButton = 1;
+
             //reset display
             foreach (Bulb bulb in bulbs)
             {
                 bulb.withPoint = false;
                 bulb.Content = '-';
             }
+            sendDataToIV11();
 
             displayIndex = 0;
             Application.Current.Dispatcher.BeginInvoke(new Action(() => displayInfo.Text = String.Format(displayInfoString[displayIndex], "--")));
@@ -174,11 +254,14 @@ namespace WpfApp1.MVVM.View
         }
         public void displayPower() //3 digits data, 1 digit units
         {
+            activeRadioButton = 2;
+
             foreach (Bulb bulb in bulbs)
             {
                 bulb.withPoint = false;
                 bulb.Content = '-';
             }
+            sendDataToIV11();
 
             System.Diagnostics.Debug.WriteLine("power button");
 
@@ -203,11 +286,14 @@ namespace WpfApp1.MVVM.View
         }
         public void displayClock() //2 digit data, 2 digit units
         {
+            activeRadioButton = 3;
+
             foreach (Bulb bulb in bulbs)
             {
                 bulb.withPoint = false;
                 bulb.Content = '-';
             }
+            sendDataToIV11();
 
             System.Diagnostics.Debug.WriteLine("clock button");
 
@@ -232,11 +318,15 @@ namespace WpfApp1.MVVM.View
 
         public void displayLoad() //2 digit data, 2 digit units
         {
+            activeRadioButton = 4;
+
             foreach (Bulb bulb in bulbs)
             {
                 bulb.withPoint = false;
                 bulb.Content = '-';
             }
+            sendDataToIV11();
+
             System.Diagnostics.Debug.WriteLine("load button");
 
             displayIndex = 3;
@@ -260,11 +350,14 @@ namespace WpfApp1.MVVM.View
 
         public void displayTime()
         {
+            activeRadioButton = 5;
+
             foreach (Bulb bulb in bulbs)
             {
                 bulb.withPoint = false;
                 bulb.Content = '-';
             }
+            sendDataToIV11();
 
             displayIndex = 4;
 

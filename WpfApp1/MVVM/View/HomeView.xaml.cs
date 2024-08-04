@@ -147,8 +147,14 @@ namespace WpfApp1.MVVM.View
 
             }
             else
-            {   
+            {
+                SensorType sensorTypeBeforeHW = sensorType;
                 float number = hw.Monitor(sensorType, sensorName);
+                if (sensorTypeBeforeHW != sensorType) //hw.monitor takes a long time, especially on slow computers, therefore, if the user changes the sensor during the loading of another, the data wont be displayed
+                {
+                    updateDisplay();
+                    return;
+                }
                 string value = ((int)Math.Round(number, 0)).ToString();
 
                 string valueToShowAsText = value;

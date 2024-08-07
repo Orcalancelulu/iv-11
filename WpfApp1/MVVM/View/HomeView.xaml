@@ -28,12 +28,13 @@
                 Background="#2b2b2b"
                 Margin="0 0 0 0"/>
 
-        <TextBlock Text="Connected with XXXXXXXXX"
+        <TextBlock Text="Connected with IV-11_DISPLAY"
                    Grid.Column="1"
                    FontSize="40"
                    Foreground="White"
                    TextAlignment="Center"
-                   VerticalAlignment="Center"/>
+                   VerticalAlignment="Center"
+                   FontFamily="/Fonts/#Poppins"/>
 
 
         <Image Source="/Images/iv-11.png" 
@@ -43,55 +44,110 @@
                MaxWidth="580"/>
 
 
-        <TextBlock Name="displayInfo" Text="CPU Temperature: xx°C" Grid.Column="1" Grid.Row="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+        <TextBlock Name="displayInfo" Text="CPU Temperature: xx°C" Grid.Column="1" Grid.Row="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontFamily="/Fonts/#Poppins"/>
+
+  
+
         <StackPanel Grid.Row="1" Grid.RowSpan="3">
-            <RadioButton Name="rb1" Click="Button_Click_1" Height="70" FontSize="30" Foreground="White" Content="CPU Temp" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
-            <RadioButton Name="rb2" Click="Button_Click_2" Height="70" FontSize="30" Foreground="White" Content="CPU Pow" Style="{StaticResource MenuButtonTheme}"/>
-            <RadioButton Name="rb3" Click="Button_Click_3" Height="70" FontSize="30" Foreground="White" Content="CPU Clock" Style="{StaticResource MenuButtonTheme}"/>
-            <RadioButton Name="rb4" Click="Button_Click_4" Height="70" FontSize="30" Foreground="White" Content="CPU Usage" Style="{StaticResource MenuButtonTheme}"/>
-            <RadioButton Name="rb5" Click="Button_Click_5" Height="70" FontSize="30" Foreground="White" Content="Time" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Cursor="Hand" Name="rb1" Click="Button_Click_1" Height="70" FontSize="30" Foreground="White" Content="     Temp" Style="{StaticResource MenuButtonTheme}" IsChecked="True"/>
+            <RadioButton Cursor="Hand" Name="rb2" Click="Button_Click_2" Height="70" FontSize="30" Foreground="White" Content="     Pow" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Cursor="Hand" Name="rb3" Click="Button_Click_3" Height="70" FontSize="30" Foreground="White" Content="     Clock" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Cursor="Hand" Name="rb4" Click="Button_Click_4" Height="70" FontSize="30" Foreground="White" Content="     Usage" Style="{StaticResource MenuButtonTheme}"/>
+            <RadioButton Cursor="Hand" Name="rb5" Click="Button_Click_5" Height="70" FontSize="30" Foreground="White" Content="Time" Style="{StaticResource MenuButtonTheme}"/>
         </StackPanel>
+        
         <Grid Name="tube1" Grid.Row="1" Grid.Column="1">
-            <Rectangle Name="t11" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,95,556,185"/>
-            <Rectangle Name="t12" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="194,108,556,122"/>
-            <Rectangle Name="t13" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="194,184,556,46"/>
-            <Rectangle Name="t14" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,247,556,33"/>
-            <Rectangle Name="t15" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="135,184,615,46"/>
-            <Rectangle Name="t16"  Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LightSeaGreen" Margin="135,108,615,122"/>
-            <Rectangle Name="t17" Grid.Column="1" Grid.Row="1" Fill="LightSeaGreen" Margin="135,171,556,109"/>
-            <Rectangle   Name="t18" Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="209,247,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle Name="t11" Grid.Column="1" Grid.Row="1" Fill="LawnGreen" Margin="135,95,556,185"/>
+            <Rectangle Name="t12" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LawnGreen" Margin="194,108,556,122"/>
+            <Rectangle Name="t13" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LawnGreen" Margin="194,184,556,46"/>
+            <Rectangle Name="t14" Grid.Column="1" Grid.Row="1" Fill="LawnGreen" Margin="135,247,556,33"/>
+            <Rectangle Name="t15" Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LawnGreen" Margin="135,184,615,46"/>
+            <Rectangle Name="t16"  Grid.Column="1" Grid.Row="1" Width="10" Height="60" Fill="LawnGreen" Margin="135,108,615,122"/>
+            <Rectangle Name="t17" Grid.Column="1" Grid.Row="1" Fill="LawnGreen" Margin="135,171,556,109"/>
+            <Rectangle   Name="t18" Grid.Column="1" HorizontalAlignment="Left" Height="10" Margin="209,247,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="10" Fill="LawnGreen"/>
         </Grid>
         <Grid Name="tube2" Grid.Row="1" Grid.Column="1">
-            <Rectangle Name="t21" Fill="LightSeaGreen" Margin="275,95,416,185"/>
-            <Rectangle Name="t22" Width="10" Height="60" Fill="LightSeaGreen" Margin="334,108,416,122"/>
-            <Rectangle Name="t23" Width="10" Height="60" Fill="LightSeaGreen" Margin="334,184,416,46"/>
-            <Rectangle Name="t24" Fill="LightSeaGreen" Margin="275,247,416,33"/>
-            <Rectangle Name="t25" Width="10" Height="60" Fill="LightSeaGreen" Margin="275,184,475,46"/>
-            <Rectangle Name="t26" Width="10" Height="60" Fill="LightSeaGreen" Margin="275,108,475,122"/>
-            <Rectangle Name="t27" Fill="LightSeaGreen" Margin="275,171,416,109"/>
-            <Rectangle   Name="t28" HorizontalAlignment="Left" Height="10" Margin="349,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle Name="t21" Fill="LawnGreen" Margin="275,95,416,185"/>
+            <Rectangle Name="t22" Width="10" Height="60" Fill="LawnGreen" Margin="334,108,416,122"/>
+            <Rectangle Name="t23" Width="10" Height="60" Fill="LawnGreen" Margin="334,184,416,46"/>
+            <Rectangle Name="t24" Fill="LawnGreen" Margin="275,247,416,33"/>
+            <Rectangle Name="t25" Width="10" Height="60" Fill="LawnGreen" Margin="275,184,475,46"/>
+            <Rectangle Name="t26" Width="10" Height="60" Fill="LawnGreen" Margin="275,108,475,122"/>
+            <Rectangle Name="t27" Fill="LawnGreen" Margin="275,171,416,109"/>
+            <Rectangle   Name="t28" HorizontalAlignment="Left" Height="10" Margin="349,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LawnGreen"/>
         </Grid>
         <Grid Name="tube3" Grid.Row="1" Grid.Column="1">
-            <Rectangle Name="t31" Fill="LightSeaGreen" Margin="412,95,279,185"/>
-            <Rectangle Name="t32" Width="10" Height="60" Fill="LightSeaGreen" Margin="471,108,279,122"/>
-            <Rectangle Name="t33" Width="10" Height="60" Fill="LightSeaGreen" Margin="471,184,279,46"/>
-            <Rectangle Name="t34" Fill="LightSeaGreen" Margin="412,247,279,33"/>
-            <Rectangle Name="t35" Width="10" Height="60" Fill="LightSeaGreen" Margin="412,184,338,46"/>
-            <Rectangle Name="t36" Width="10" Height="60" Fill="LightSeaGreen" Margin="412,108,338,122"/>
-            <Rectangle Name="t37" Fill="LightSeaGreen" Margin="412,171,279,109"/>
-            <Rectangle   Name="t38" HorizontalAlignment="Left" Height="10" Margin="486,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle Name="t31" Fill="LawnGreen" Margin="412,95,279,185"/>
+            <Rectangle Name="t32" Width="10" Height="60" Fill="LawnGreen" Margin="471,108,279,122"/>
+            <Rectangle Name="t33" Width="10" Height="60" Fill="LawnGreen" Margin="471,184,279,46"/>
+            <Rectangle Name="t34" Fill="LawnGreen" Margin="412,247,279,33"/>
+            <Rectangle Name="t35" Width="10" Height="60" Fill="LawnGreen" Margin="412,184,338,46"/>
+            <Rectangle Name="t36" Width="10" Height="60" Fill="LawnGreen" Margin="412,108,338,122"/>
+            <Rectangle Name="t37" Fill="LawnGreen" Margin="412,171,279,109"/>
+            <Rectangle   Name="t38" HorizontalAlignment="Left" Height="10" Margin="486,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LawnGreen"/>
         </Grid>
         <Grid Name="tube4" Grid.Row="1" Grid.Column="1">
-            <Rectangle Name="t41" Fill="LightSeaGreen" Margin="543,95,148,185"/>
-            <Rectangle Name="t42" Width="10" Height="60" Fill="LightSeaGreen" Margin="602,108,148,122"/>
-            <Rectangle Name="t43" Width="10" Height="60" Fill="LightSeaGreen" Margin="602,184,148,46"/>
-            <Rectangle Name="t44" Fill="LightSeaGreen" Margin="543,247,148,33"/>
-            <Rectangle Name="t45" Width="10" Height="60" Fill="LightSeaGreen" Margin="543,184,207,46"/>
-            <Rectangle Name="t46" Width="10" Height="60" Fill="LightSeaGreen" Margin="543,108,207,122"/>
-            <Rectangle Name="t47" Fill="LightSeaGreen" Margin="543,171,148,109"/>
-            <Rectangle   Name="t48" HorizontalAlignment="Left" Height="10" Margin="617,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LightSeaGreen"/>
+            <Rectangle Name="t41" Fill="LawnGreen" Margin="543,95,148,185"/>
+            <Rectangle Name="t42" Width="10" Height="60" Fill="LawnGreen" Margin="602,108,148,122"/>
+            <Rectangle Name="t43" Width="10" Height="60" Fill="LawnGreen" Margin="602,184,148,46"/>
+            <Rectangle Name="t44" Fill="LawnGreen" Margin="543,247,148,33"/>
+            <Rectangle Name="t45" Width="10" Height="60" Fill="LawnGreen" Margin="543,184,207,46"/>
+            <Rectangle Name="t46" Width="10" Height="60" Fill="LawnGreen" Margin="543,108,207,122"/>
+            <Rectangle Name="t47" Fill="LawnGreen" Margin="543,171,148,109"/>
+            <Rectangle   Name="t48" HorizontalAlignment="Left" Height="10" Margin="617,247,0,0"  VerticalAlignment="Top" Width="10" Fill="LawnGreen"/>
         </Grid>
-       
+
+
+        <Image Source="/Images/whiteCpu.png"
+             MaxWidth="40"
+             Margin="0 200 100 0"
+             Grid.Row="1"/>
+
+
+        <Button Name="loadGitHubButton" 
+                Click="loadGitHub"
+                BorderBrush="Transparent" 
+                Foreground="White"
+                Cursor="Hand">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#424242"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Image Source="/Images/logoDickIV.png"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            MaxWidth="120"/>
+
+        </Button>
+
+
+        <Image Source="/Images/whiteCpu.png"
+            MaxWidth="40"
+            Margin="0,131,100,69"
+            Grid.Row="1"/>
+        <Image Source="/Images/whiteCpu.png"
+            MaxWidth="40"
+            Margin="0,59,100,141"
+            Grid.Row="1"/>
+        <Image Source="/Images/whiteCpu.png"
+            MaxWidth="40"
+            Margin="0,141,100,209" Grid.RowSpan="2"/>
+
     </Grid>
 
 

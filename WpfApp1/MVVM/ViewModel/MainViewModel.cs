@@ -44,7 +44,6 @@ namespace WpfApp1.MVVM.ViewModel
             {
                 CurrentView = ConnectVM;
 
-
             });
         }
     }

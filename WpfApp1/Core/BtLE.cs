@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using WpfApp1.MVVM.ViewModel;
 using Windows.Storage.Streams;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Advertisement;
@@ -33,6 +34,10 @@ namespace WpfApp1.Core
             {
                 return isConnected;
             }
+            set
+            {
+                isConnected = value;
+            }
         }
 
         public static GattCharacteristic DataCharacteristic 
@@ -51,6 +56,9 @@ namespace WpfApp1.Core
             }
         }
 
+        
+
+
         private static BluetoothLEAdvertisementWatcher watcher;
         private static BluetoothLEDevice bluetoothDevice;
         private static GattCharacteristic BtLEDataCharacteristic;
@@ -63,8 +71,11 @@ namespace WpfApp1.Core
             watcher = new BluetoothLEAdvertisementWatcher();
             watcher.Received += OnAdvertisementReceived;
             watcher.Start();
+            
 
         }
+
+        
 
         public static async Task<bool> waitTillConnected()
         {

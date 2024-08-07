@@ -7,24 +7,46 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TargetFramework>net8.0-windows10.0.18362.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\iconIV2.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Poppins-Regular.ttf" />
+    <None Remove="Gifs\load.gif" />
+    <None Remove="Gifs\load2.gif" />
+    <None Remove="Gifs\loadingBlob.json" />
+    <None Remove="Gifs\Rolling%401x-1.0s-200px-200px.gif" />
+    <None Remove="Gifs\whiteLoading.json" />
+    <None Remove="Images\backWhite.png" />
     <None Remove="Images\iv-11.png" />
+    <None Remove="Images\logoDickIV.png" />
+    <None Remove="Images\logoIV.png" />
+    <None Remove="Images\whiteCpu.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\iconIV2.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="MVVM\Model\" />
-    <Folder Include="Fonts\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.3" />
+    <PackageReference Include="LottieSharp" Version="2.3.0" />
     <PackageReference Include="System.Management" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Poppins-Regular.ttf" />
+    <Resource Include="Gifs\loadingBlob.json" />
+    <Resource Include="Gifs\whiteLoading.json" />
+    <Resource Include="Images\backWhite.png" />
     <Resource Include="Images\iv-11.png" />
+    <Resource Include="Images\logoDickIV.png" />
+    <Resource Include="Images\logoIV.png" />
+    <Resource Include="Images\whiteCpu.png" />
   </ItemGroup>
 
 </Project>

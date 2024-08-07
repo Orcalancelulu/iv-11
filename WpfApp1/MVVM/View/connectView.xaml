@@ -25,14 +25,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Not connected" 
-                      FontSize="40" 
-                      HorizontalAlignment="Center" 
-                      VerticalAlignment="Center"
-                      Foreground="White"/>
 
-
-        
 
         
 

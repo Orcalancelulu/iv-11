@@ -2,16 +2,13 @@
 using System.Windows.Controls;
 using WpfApp1.Core;
 using System.Timers;
-using System.Threading;
-using System.Windows.Media;
 using System.Windows;
-using System.Reflection.PortableExecutable;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Storage.Streams;
-using HidSharp.Experimental;
-using HidSharp.Utility;
-using System.Xml.Linq;
-
+using Windows.Devices.Bluetooth;
+using WpfApp1.MVVM.ViewModel;
+using System.Diagnostics;
+using System;
 
 namespace WpfApp1.MVVM.View
 {
@@ -59,7 +56,7 @@ namespace WpfApp1.MVVM.View
 
             System.Diagnostics.Debug.WriteLine(BtLE.IsConnected.ToString());
             setUpNotification();
-
+            BtLE.BluetoothDevice.ConnectionStatusChanged += checkConnection;
         }
 
         private async void setUpNotification()
@@ -150,7 +147,7 @@ namespace WpfApp1.MVVM.View
             {
                 SensorType sensorTypeBeforeHW = sensorType;
                 float number = hw.Monitor(sensorType, sensorName);
-                if (sensorTypeBeforeHW != sensorType) //hw.monitor takes a long time, especially on slow computers, therefore, if the user changes the sensor during the loading of another, the data wont be displayed
+                if (sensorTypeBeforeHW != sensorType || isClock == true) //hw.monitor takes a long time, especially on slow computers, therefore, if the user changes the sensor during the loading of another, the data wont be displayed
                 {
                     updateDisplay();
                     return;
@@ -213,14 +210,8 @@ namespace WpfApp1.MVVM.View
             var writer = new DataWriter();
 
             writer.WriteBytes(byteArray);
-
-            GattCommunicationStatus resultWrite = await BtLE.DataCharacteristic.WriteValueAsync(writer.DetachBuffer());
-            if (resultWrite == GattCommunicationStatus.Success)
-            {
-                // Successfully wrote to device
-                Console.WriteLine("wrote to device");
-
-            }
+            if (BtLE.BluetoothDevice.ConnectionStatus == BluetoothConnectionStatus.Disconnected) return; //if disconnected, then dont write
+            BtLE.DataCharacteristic.WriteValueAsync(writer.DetachBuffer());
         }
 
 
@@ -400,8 +391,28 @@ namespace WpfApp1.MVVM.View
             displayTime();
         }
 
+        public void checkConnection(BluetoothLEDevice bd, object e )
+        {
+            if (BtLE.BluetoothDevice.ConnectionStatus == BluetoothConnectionStatus.Disconnected)
+            {
+                //device disconnected, return to search device
+                System.Diagnostics.Debug.WriteLine("DISCONNECTED");
+               
+                timer.Dispose();
 
+                //change of windows is doing mainview.xaml.cs
+            }
+        }
 
+        private void loadGitHub(object sender, EventArgs e)
+        {
+            var ps = new ProcessStartInfo("http://github.com/Orcalancelulu/iv-11")
+            {
+                UseShellExecute = true,
+                Verb = "open"
+            };
+            Process.Start(ps);
+        }
 
     }
 }

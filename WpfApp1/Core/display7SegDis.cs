@@ -69,14 +69,9 @@ namespace WpfApp1.Core
                 {
                         
                     Application.Current.Dispatcher.BeginInvoke(new Action(() => ((Rectangle)fwElement.FindName(segment)).Fill = Brushes.LawnGreen));
-
-
                 }
-                i++;
-                
+                i++;           
             }
-
-
         }
     }
 }

@@ -61,6 +61,7 @@ namespace WpfApp1.MVVM.View
 
         private async void setUpNotification()
         {
+            
             GattCommunicationStatus status = await BtLE.SettingsCharacteristic.WriteClientCharacteristicConfigurationDescriptorAsync(GattClientCharacteristicConfigurationDescriptorValue.Notify);
             BtLE.SettingsCharacteristic.ValueChanged += displayInfoChange;
         }

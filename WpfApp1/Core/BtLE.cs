@@ -99,7 +99,7 @@ namespace WpfApp1.Core
 
                 GattDeviceServicesResult result = await bluetoothDevice.GetGattServicesAsync(); //only for it to connect
 
-                isConnected = true;
+                
 
                 Console.WriteLine("Status: " + bluetoothDevice.ConnectionStatus);
 
@@ -161,10 +161,12 @@ namespace WpfApp1.Core
                                 {
                                     BtLESettingsCharacteristic = characteristic;
                                 }
+
                             }
                         }
                     }
                 }
+                isConnected = true;
             }
         }
     }

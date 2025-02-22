@@ -25,8 +25,9 @@ namespace WpfApp1
             Button1.Visibility = Visibility.Collapsed;
             loadingText.Visibility = Visibility.Visible;
             loadingAnim.Visibility = Visibility.Visible;
+            loadingAnim.IsPlaying = true;
 
-
+            ResizeMode = ResizeMode.CanMinimize;
 
             //connect to device
             bluetoothConnect();
@@ -42,8 +43,10 @@ namespace WpfApp1
             Application.Current.Dispatcher.BeginInvoke(new Action(() => {
                 //Button1.Visibility = Visibility.Visible;
                 loadingAnim.Visibility = Visibility.Collapsed;
+                loadingAnim.IsPlaying = false;
                 //loadingText.Text = "Device Found";
                 loadingText.Visibility = Visibility.Collapsed;
+                
             }));
 
             mainViewModel.CurrentView = mainViewModel.HomeVM;
@@ -59,6 +62,7 @@ namespace WpfApp1
                 Button1.Visibility = Visibility.Collapsed;
                 loadingText.Visibility = Visibility.Visible;
                 loadingAnim.Visibility = Visibility.Visible;
+                loadingAnim.IsPlaying = true;
                 loadingText.Text = "Searching for Device...";
 
             }));
@@ -94,8 +98,8 @@ namespace WpfApp1
         private void loadHome(object sender, RoutedEventArgs e)
         {
 
-            Button1.Visibility = Visibility.Collapsed;
-            loadingText.Visibility = Visibility.Collapsed;
+            //Button1.Visibility = Visibility.Collapsed;
+            //loadingText.Visibility = Visibility.Collapsed;
 
 
 

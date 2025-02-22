@@ -40,6 +40,8 @@ namespace WpfApp1.MVVM.View
         private const int numberOfRadioButtons = 5;
         private int activeRadioButton = 1;
 
+        private int globalDebugCounter = 0;
+
         public HomeView()
         {
             InitializeComponent();
@@ -186,9 +188,12 @@ namespace WpfApp1.MVVM.View
             charTo7Seg table = new charTo7Seg();
             List<int[]> byteInts = new List<int[]>();
 
+            int counter = 0;
             foreach (Bulb bulb in bulbs)
             {
-                byteInts.Add(table.getTable(bulb.Content, bulb.withPoint));   
+               
+                 byteInts.Add(table.getTable(bulb.Content, bulb.withPoint));
+
             }
 
 

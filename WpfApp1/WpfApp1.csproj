@@ -8,10 +8,14 @@
     <TargetFramework>net8.0-windows10.0.18362.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Images\iconIV2.ico</ApplicationIcon>
+    <AssemblyName>IV-11_Controller</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Fonts\Poppins-Regular.ttf" />
+    <None Remove="Gifs\ball_fly.json" />
+    <None Remove="Gifs\circleTech.json" />
     <None Remove="Gifs\load.gif" />
     <None Remove="Gifs\load2.gif" />
     <None Remove="Gifs\loadingBlob.json" />
@@ -40,6 +44,8 @@
 
   <ItemGroup>
     <Resource Include="Fonts\Poppins-Regular.ttf" />
+    <Resource Include="Gifs\ball_fly.json" />
+    <Resource Include="Gifs\circleTech.json" />
     <Resource Include="Gifs\loadingBlob.json" />
     <Resource Include="Gifs\whiteLoading.json" />
     <Resource Include="Images\backWhite.png" />

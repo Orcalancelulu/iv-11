@@ -14,17 +14,16 @@
         AllowsTransparency="False"
         MouseLeftButtonDown="DragWindow">
 
-   
-    
+
+
     <Border
-        Background="#1a1a1a"
-        CornerRadius="0">
+        CornerRadius="0" Background="#FF1A1A1A">
 
 
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
-                <RowDefinition/> 
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Name="ButtonMinimize" 
@@ -131,20 +130,20 @@
                        Margin="0 0 0 300"
                        Grid.Row="2"
                        FontFamily="/Fonts/#Poppins"/>
-            <lottie:LottieAnimationView Width="250"
-                                        Height="250"
-                                        Margin="0 300 0 0"
+            <lottie:LottieAnimationView Width="700"
+                                        Height="700"
+                                        Margin="0 100 0 0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         AutoPlay="True"
-                                        ResourcePath="pack://application:,,,/Gifs/whiteLoading.json"
+                                        ResourcePath="pack://application:,,,/Gifs/circleTech.json"
                                         RepeatCount="-1"
                                         Name="loadingAnim"
                                         Grid.Row="2"/>
-           
+
         </Grid>
-        
-      
+
+
 
     </Border>
 
